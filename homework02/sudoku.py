@@ -131,7 +131,7 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     row = get_row(grid, pos)
     col = get_col(grid, pos)
     block = get_block(grid, pos)
-    return sorted(list(set(possib_values)-set(row)-set(col)-set(block)))
+    return ((set(possib_values)-set(row)-set(col)-set(block)))
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
@@ -151,7 +151,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     if not empty_poss:
         return grid
     
-    poss_answers = find_possible_values(grid,empty_poss)
+    poss_answers = list(find_possible_values(grid,empty_poss))
     for i in range(len(poss_answers)):
         grid[empty_poss[0]][empty_poss[1]] = poss_answers[i]
         if solve(grid):
@@ -169,15 +169,15 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     for i in range(9):
         for j in range(9):
             pos = i, j
-            row = get_row(grid, pos)
+            row = get_row(solution, pos)
             for k in range(len(sorted(row))-1):
                 if row[k]==row[k+1]:
                     a=False
-            col = get_col(grid, pos)
+            col = get_col(solution, pos)
             for m in range(len(sorted(col))-1):
                 if col[m]==col[m+1]:
                     a=False
-            block = get_block(grid, pos)
+            block = get_block(solution, pos)
             for n in range(len(sorted(block))-1):
                 if row[n]==row[n+1]:
                     a=False
@@ -213,6 +213,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
+    
     grid = [["."] * 9 for i in range(9)]
     solution = solve(grid)
     while N < 81:
