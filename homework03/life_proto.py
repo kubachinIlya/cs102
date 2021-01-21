@@ -15,7 +15,7 @@ Grid = List[Cells]
 
 class GameOfLife:
     def __init__(
-            self, width: int = 640, height: int = 480, cell_size: int = 10, speed: int = 10
+        self, width: int = 640, height: int = 480, cell_size: int = 10, speed: int = 10
     ) -> None:
         self.width = width
         self.height = height
@@ -69,13 +69,16 @@ class GameOfLife:
     def create_grid(self, randomize: bool = False) -> Grid:
         """
         Создание списка клеток.
+
         Клетка считается живой, если ее значение равно 1, в противном случае клетка
         считается мертвой, то есть, ее значение равно 0.
+
         Parameters
         ----------
         randomize : bool
             Если значение истина, то создается матрица, где каждая клетка может
             быть равновероятно живой или мертвой, иначе все клетки создаются мертвыми.
+
         Returns
         ----------
         out : Grid
@@ -120,16 +123,20 @@ class GameOfLife:
                             self.cell_size - 1,
                         ),
                     )
+
     def get_neighbours(self, cell: Cell) -> Cells:
         """
         Вернуть список соседних клеток для клетки `cell`.
+
         Соседними считаются клетки по горизонтали, вертикали и диагоналям,
         то есть, во всех направлениях.
+
         Parameters
         ----------
         cell : Cell
             Клетка, для которой необходимо получить список соседей. Клетка
             представлена кортежем, содержащим ее координаты на игровом поле.
+
         Returns
         ----------
         out : Cells
@@ -140,8 +147,8 @@ class GameOfLife:
         for pos_y in range(col - 1, col + 2):
             for pos_x in range(row - 1, row + 2):
                 if not (
-                        0 <= pos_y <= self.cell_height - 1
-                        and 0 <= pos_x <= self.cell_width - 1
+                    0 <= pos_y <= self.cell_height - 1
+                    and 0 <= pos_x <= self.cell_width - 1
                 ) or (pos_y == col and pos_x == row):
                     continue
                 neighbours.append(self.grid[pos_y][pos_x])
@@ -150,6 +157,7 @@ class GameOfLife:
     def get_next_generation(self) -> Grid:
         """
         Получить следующее поколение клеток.
+
         Returns
         ----------
         out : Grid
